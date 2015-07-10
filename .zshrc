@@ -1,5 +1,8 @@
 # Add `~/bin` to the `$PATH`
-export PATH="$HOME/bin:$PATH"
+export PATH="$HOME/bin:$PATH:~/bin"
+
+# Add nodebrew to the `$PATH`
+export PATH="$HOME/.nodebrew/current/bin:$PATH"
 
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
