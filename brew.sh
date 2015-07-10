@@ -1,72 +1,75 @@
 #!/bin/bash
 
-# Install command-line tools using Homebrew
-
-# Make sure we’re using the latest Homebrew
 brew update
-
-# Upgrade any already-installed formulae
 brew upgrade
 
-
-# GNU core utilities (those that come with OS X are outdated)
 # Don’t forget to add `$(brew --prefix coreutils)/libexec/gnubin` to `$PATH`.
 brew install coreutils
-brew install moreutils
 # GNU `find`, `locate`, `updatedb`, and `xargs`, `g`-prefixed
 brew install findutils
-# GNU `sed`, overwriting the built-in `sed`
-brew install gnu-sed --default-names
-
-
-# Bash 4
-# Note: don’t forget to add `/usr/local/bin/bash` to `/etc/shells` before running `chsh`.
-brew install bash
-# regular bash-completion package is held back to an older release, so we get latest from versions.
-#   github.com/Homebrew/homebrew/blob/master/Library/Formula/bash-completion.rb#L3-L4
-brew tap homebrew/versions
-brew install homebrew/versions/bash-completion2
-
-# generic colouriser  http://kassiopeia.juls.savba.sk/~garabik/software/grc/
-brew install grc
-
-# Install wget with IRI support
 brew install wget --enable-iri
 
-# Install more recent versions of some OS X tools
-brew install vim --override-system-vi
+brew install zsh
+brew tap homebrew/dupes
 brew install homebrew/dupes/grep
-brew install homebrew/dupes/screen
-
-
-# run this script when this file changes guy.
-brew install entr
-
-# github util. imho better than hub
-brew install gh
-
-
-# mtr - ping & traceroute. best.
-brew install mtr
-
-
-# Install other useful binaries
 brew install ack
 brew install git
-brew install imagemagick --with-webp
-brew install node # This installs `npm` too using the recommended installation method
-brew install pv
-brew install rename
 brew install tree
-brew install zopfli
-brew install ffmpeg --with-libvpx
 
-brew install terminal-notifier
+brew install openssl
+brew install php54-mcrypt
+brew install optipng
+brew install redis
+brew install mysql
+brew install phpunit
+brew install postgresql
 
-brew install android-platform-tools
-brew install pidcat   # colored logcat guy
+brew install gh
+brew install nodebrew
+brew install rbenv
+brew install ruby-build
+brew install heroku-toolbelt
 
-brew install zsh
+# cask
+# brew update && brew upgrade brew-cask && brew cleanup && brew cask cleanup`
 
-# Remove outdated versions from the cellar
+brew install caskroom/cask/brew-cask
+brew tap caskroom/versions
+
+brew cask install spectacle
+brew cask install dropbox
+brew cask install skitch
+brew cask install 1password
+brew cask install rescuetime
+brew cask install totalfinder
+
+brew cask install iterm2
+brew cask install sublime-text
+brew cask install atom
+brew cask install webstorm
+brew cask install imageoptim
+brew cask install charles
+
+brew cask install virtualbox
+brew cask install genymotion
+brew cask install vagrant
+
+brew cask install miro-video-converter
+brew cask install adobe-photoshop-lightroom
+
+brew cask install google-chrome-canary
+brew cask install firefox-nightly
+brew cask install webkit-nightly
+brew cask install chromium
+
+brew cask install vlc
+brew cask install licecap
+
+# Appstore
+
+## BetterSnapTool
+## Slack
+## Line
+## Transmit
+
 brew cleanup
