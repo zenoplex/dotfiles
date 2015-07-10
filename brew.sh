@@ -44,7 +44,8 @@ brew cask install rescuetime
 brew cask install totalfinder
 
 brew cask install iterm2
-brew cask install sublime-text
+brew tap caskroom/versions
+brew cask install sublime-text3
 brew cask install atom
 brew cask install webstorm
 brew cask install imageoptim
@@ -57,10 +58,12 @@ brew cask install vagrant
 brew cask install miro-video-converter
 brew cask install adobe-photoshop-lightroom
 
-brew cask install google-chrome-canary
-brew cask install firefox-nightly
+brew cask install google-chrome-beta
+brew cask install firefoxdeveloperedition
 brew cask install webkit-nightly
 brew cask install chromium
+
+brew cask install slack
 
 brew cask install vlc
 brew cask install licecap
@@ -68,7 +71,6 @@ brew cask install licecap
 # Appstore
 
 ## BetterSnapTool
-## Slack
 ## Line
 ## Transmit
 
