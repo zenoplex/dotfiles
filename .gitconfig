@@ -22,14 +22,11 @@
 		fi \
 	}; f"
 
-
-
-[color]
-	ui = always
-
 [core]
 	excludesfile = ~/.gitignore
 	attributesfile = ~/.gitattributes
+[color]
+	ui = always
 [color "branch"]
 	current = yellow reverse
 	local = yellow
@@ -45,7 +42,6 @@
 	untracked = cyan
 [merge]
     tool = opendiff
-
 
 # rewrites
 [url "git@github.com:"]
@@ -64,16 +60,14 @@
 # Any GitHub repo with my username should be checked out r/w by default
 # http://rentzsch.tumblr.com/post/564806957/public-but-hackable-git-submodules
 
-[url "git@github.com:paulirish/"]
-  insteadOf = "git://github.com/paulirish/"
+[url "git@github.com:zenoplex/"]
+  insteadOf = "git://github.com/zenoplex/"
 [help]
-	autocorrect = 1
+  autocorrect = 1
 
 # push easily. http://stackoverflow.com/a/23918418/89484
 [push]
 	default = current
-
-
 
 [include]
   # For username / github token / etc
