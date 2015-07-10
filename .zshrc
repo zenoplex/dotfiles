@@ -1,93 +1,63 @@
-# zmodload zsh/zprof
+# Add `~/bin` to the `$PATH`
+export PATH="$HOME/bin:$PATH"
 
-# history
-SAVEHIST=100000
+# Path to your oh-my-zsh configuration.
+ZSH=$HOME/.oh-my-zsh
 
-# vim bindings
-bindkey -v
-
-
-# zstyle :compinstall filename '/Users/paulirish/.zshrc'
-# autoload -Uz compinit
-# compinit
-
-
-fpath=( "$HOME/.zfunctions" $fpath )
+# Set name of the OhMyZSH theme to load.
+# Look in ~/.oh-my-zsh/themes/
+# Optionally, if you set this to "random", it'll load a random theme each
+# time that oh-my-zsh is loaded.
+ZSH_THEME="avit"
 
 
+# Load the shell dotfiles, and then some:
+# * ~/.mix-path can be used to extend `$PATH`.
+# * ~/.mix-extra can be used for other settings you don’t want to commit to your repo.
+for file in ~/.{exports,aliases,extra,functions}; do
+	[ -r "$file" ] && source "$file"
+done
+unset file
 
-# antigen time!
-source ~/code/antigen/antigen.zsh
+# Uncomment the following line to use case-sensitive completion.
+# CASE_SENSITIVE="true"
 
-# Load the oh-my-zsh's library.
-# antigen use oh-my-zsh
+# Uncomment the following line to disable bi-weekly auto-update checks.
+# DISABLE_AUTO_UPDATE="true"
 
+# Uncomment the following line to change how often to auto-update (in days).
+# export UPDATE_ZSH_DAYS=13
 
-local b="antigen-bundle"
+# Uncomment the following line to disable colors in ls.
+# DISABLE_LS_COLORS="true"
 
-# Guess what to install when running an unknown command.
-$b command-not-found
+# Uncomment the following line to disable auto-setting terminal title.
+# DISABLE_AUTO_TITLE="true"
 
-# Helper for extracting different types of archives.
-$b extract
+# Uncomment the following line to enable command auto-correction.
+# ENABLE_CORRECTION="true"
 
-# atom editor
-$b atom
+# Uncomment the following line to display red dots whilst waiting for completion.
+COMPLETION_WAITING_DOTS="true"
 
-# homebrew  - autocomplete on `brew install`
-$b brew
-$b brew-cask
+# Uncomment the following line if you want to disable marking untracked files
+# under VCS as dirty. This makes repository status check for large repositories
+# much, much faster.
+# DISABLE_UNTRACKED_FILES_DIRTY="true"
 
-# Tracks your most used directories, based on 'frecency'. 
-$b robbyrussell/oh-my-zsh plugins/z
+# Uncomment the following line if you want to change the command execution time
+# stamp shown in the history command output.
+# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+# HIST_STAMPS="mm/dd/yyyy"
 
-# suggestion as you type
-$b tarruda/zsh-autosuggestions
+# Would you like to use another custom folder than $ZSH/custom?
+# ZSH_CUSTOM=/path/to/new-custom-folder
 
-# nicoulaj's moar completion files for zsh
-# $b zsh-users/zsh-completions src
+# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
+# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+# Add wisely, as too many plugins slow down shell startup.
+# plugins=(git brew bundler capistrano cloudapp composer gem laravel npm rvm bower sublime)
+plugins=(git zsh-syntax-highlighting vi-mode z)
 
-# Syntax highlighting on the readline
-$b zsh-users/zsh-syntax-highlighting
-
-# colors for all files!
-$b trapd00r/zsh-syntax-highlighting-filetypes
-
-# dont set a theme, because pure does it all
-$b sindresorhus/pure
-
-# history search
-$b zsh-users/zsh-history-substring-search
-
-
-# Tell antigen that you're done.
-antigen apply
-
-
-# bind UP and DOWN arrow keys for history search
-zmodload zsh/terminfo
-bindkey "$terminfo[kcuu1]" history-substring-search-up
-bindkey "$terminfo[kcud1]" history-substring-search-down
-
-export PURE_GIT_UNTRACKED_DIRTY=0
-
-# Automatically list directory contents on `cd`.
-auto-ls () { ls; }
-chpwd_functions=( auto-ls $chpwd_functions )
-
-
-# zprof
-
-# history mgmt
-# http://www.refining-linux.org/archives/49/ZSH-Gem-15-Shared-history/
-setopt inc_append_history
-setopt share_history
-
-
-zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
-
-
-
-# Load default dotfiles
-source ~/.bash_profile
-
+source $ZSH/oh-my-zsh.sh
