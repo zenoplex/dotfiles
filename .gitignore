@@ -20,3 +20,9 @@ Thumbs.db
 
 # Compiled Python files
 *.pyc
+
+# surge config files
+CNAME
+
+# intelij
+.idea
