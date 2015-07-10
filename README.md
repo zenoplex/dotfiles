@@ -1,8 +1,6 @@
-# Paul's dotfiles
+# Gen's dotfiles
 
-* I maintain this repo as *my* dotfiles, but I'm keenly aware people are using it for theirs.
-* You're quite welcome to make suggestions, however I may decline if it's not of personal value to me.
-* If you're starting off consider forking [mathias](https://github.com/mathiasbynens/dotfiles/) or [alrra](https://github.com/alrra/dotfiles/). paulmillr and gf3 also have great setups
+This repo contains my personal dotfiles and are heavily based on [Paul Irish](https://github.com/paulirish/dotfiles) and mathias's.
 
 ## Setup
 #### installing & using
@@ -14,16 +12,10 @@
   * git config needs attention, read the notes.
 * use it. yay!
 
-#### maintenance
-
-* commit/push changes you want.
-* you can also hypothetically cherry-pick commits from me and mathias and our fork ecosystem.
-
-
 
 ## my favorite parts.
 
-### [`.aliases`](https://github.com/paulirish/dotfiles/blob/master/.aliases) and [`.functions`](https://github.com/paulirish/dotfiles/blob/master/.functions)
+### [`.aliases`](https://github.com/zenoplex/dotfiles/blob/master/.aliases) and [`.functions`](https://github.com/zenoplex/dotfiles/blob/master/.functions)
 
 So many goodies.
 
@@ -51,7 +43,6 @@ cdf       # cd to whatever's up in Finder
 Lastly, I use `open .` to open Finder from this path. (That's just available normally.)
 
 
-
 ## overview of files
 
 ####  Automatic config
@@ -61,18 +52,16 @@ Lastly, I use `open .` to open Finder from this path. (That's just available nor
 
 #### shell environment
 * `.aliases`
-* `.bash_profile`
-* `.bash_prompt`
-* `.bashrc`
 * `.exports`
 * `.functions`
+* `.zshrc`
 * `.extra` - not included, explained above
 
 #### manual run
 * `setup-a-new-machine.sh` - random apps i need installed
 * `symlink-setup.sh`  - sets up symlinks for all dotfiles and vim config.
 * `.osx` - run on a fresh osx setup
-* `brew.sh` & `brew-cask.sh` - homebrew initialization
+* `brew.sh` - homebrew initialization
 
 #### git, brah
 * `.git`
