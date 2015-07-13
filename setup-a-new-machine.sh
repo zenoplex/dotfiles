@@ -40,34 +40,21 @@ cp -R ~/Documents ~/migration
 #   Not sure how to do this yet. Really want to.
 
 
-
 ##
 ## new machine setup.
 ##
 
-
 #
 # homebrew!
 #
-# (google machines are funny so i have to do this. everyone else should use the regular thang)
-mkdir $HOME/.homebrew && curl -L https://github.com/mxcl/homebrew/tarball/master | tar xz --strip 1 -C $HOME/.homebrew
-export PATH=$HOME/.homebrew/bin:$HOME/.homebrew/sbin:$PATH
+ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
 #
 # install all the things
 ./brew.sh
 
 # install Oh My Zsh
 sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-
-npm install -g git-open
-npm install -g npm-check-updates
-npm install -g browser-sync
-npm install -g yo
-npm install -g gulp
-npm install -g less2sass
-npm install -g html2jade
-npm install -g surge
-
 
 # github.com/rupa/z   - oh how i love you
 # chmod +x ~/code/z/z.sh
@@ -105,3 +92,12 @@ sh .osx
 #   put/move git credentials into ~/.gitconfig.local
 #   http://stackoverflow.com/a/13615531/89484
 ./symlink-setup.sh
+
+npm install -g git-open
+npm install -g npm-check-updates
+npm install -g browser-sync
+npm install -g yo
+npm install -g gulp
+npm install -g less2sass
+npm install -g html2jade
+npm install -g surge
