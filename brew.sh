@@ -36,6 +36,9 @@ brew install heroku-toolbelt
 brew install caskroom/cask/brew-cask
 brew tap caskroom/versions
 
+# for US keyboard and switchin Japanese
+brew cask install karabiner
+
 brew cask install spectacle
 brew cask install dropbox
 brew cask install skitch
@@ -67,6 +70,7 @@ brew cask install slack
 
 brew cask install vlc
 brew cask install licecap
+
 
 # Appstore
 
