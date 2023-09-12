@@ -1,0 +1,50 @@
+[directory]
+format = "[ $path ]($style)"
+truncation_length = 3
+truncation_symbol = "…/"
+truncate_to_repo = false
+style="cyan"
+
+[character]
+success_symbol = "[❯](purple)"
+error_symbol = "[❯](red)"
+vimcmd_symbol = "[❮](green)"
+
+[git_branch]
+symbol = " "
+format = "[$symbol$branch ]($style)"
+style = "bright-purple"
+
+[git_status]
+style = "bright-red"
+
+[git_state]
+format = '\([$state( $progress_current/$progress_total)]($style)\) '
+style = "bright-black"
+
+[cmd_duration]
+min_time = 500
+format = '[$duration](yellow)'
+
+[docker_context]
+style = "bright-blue"
+
+[package]
+style = "208"
+
+# Language specific prompts
+
+[rust]
+style = "bright-red"
+
+[deno]
+style = "bright-green"
+
+[nodejs]
+style = "bright-green"
+
+[ruby]
+style = "bright-red"
+
+[terraform]
+style = "105"
