@@ -1,0 +1,13 @@
+# General
+.DS_Store
+Thumbs.db
+
+# Temp files
+._*
+*.swp
+
+# env
+.env
+
+# settings
+.vscode
