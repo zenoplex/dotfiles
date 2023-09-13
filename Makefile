@@ -2,7 +2,7 @@ PWD := $(shell pwd)
 DOTFILES := $(PWD)/dotfiles
 
 .PHONY: install
-install: make_dir symlink install_brew
+install: make_dir symlink install_brew install_brew_packages
 
 # Make directory if not exist
 .PHONY: make_dir
@@ -47,4 +47,3 @@ endif
 .PHONY: install_brew_packages
 install_brew_packages:
 	brew bundle --file=$(DOTFILES)/Brewfile
-	
