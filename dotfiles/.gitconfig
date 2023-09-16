@@ -7,6 +7,7 @@
 [alias]
 	co = checkout
 	s = status -s
+	br = branch
 [ghq]
 	root = ~/projects/
 [init]
