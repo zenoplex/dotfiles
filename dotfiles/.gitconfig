@@ -21,3 +21,5 @@
 	autosquash = true
 [mergetool "p4merge"]
 	path = /Applications/p4merge.app/Contents/Resources/launchp4merge
+[commit]
+	template = ~/.gitmessage.txt
