@@ -28,3 +28,6 @@ eval "$(starship init zsh)"
 
 # direnv
 eval "$(direnv hook zsh)"
+
+# rbenv
+eval "$(rbenv init - zsh)"
