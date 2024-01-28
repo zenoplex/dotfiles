@@ -8,7 +8,7 @@
 	co = checkout
 	s = status -s
 	br = branch
-	brdm = !git branch --merged | egrep -v '(^\\*|master|main)'
+	brdm = !git branch --merged | egrep -v '(^\\*|master|main)' | xargs git branch -d
 [ghq]
 	root = ~/projects/
 [init]
