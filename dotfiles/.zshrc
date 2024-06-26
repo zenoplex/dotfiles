@@ -20,6 +20,9 @@ export NVM_COMPLETION=true
 export NVM_AUTO_USE=true
 zi light "lukechilds/zsh-nvm"
 
+# brew
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
 # control + g to jump to repo dir
 zi light migutw42/zsh-fzf-ghq
 
