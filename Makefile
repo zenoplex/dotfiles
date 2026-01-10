@@ -8,6 +8,7 @@ install: make_dir symlink install_brew install_brew_packages
 .PHONY: make_dir
 make_dir:
 	mkdir -p ${HOME}/.config/git
+	mkdir -p ${HOME}/.claude
 
 # Symlink dotfiles
 .PHONY: symlink
@@ -16,6 +17,9 @@ symlink: \
 	${HOME}/.gitconfig \
 	${HOME}/.gitignore \
 	${HOME}/startship \
+	${HOME}/.claude/skills \
+	${HOME}/.claude/settings.json \
+	${HOME}/.claude/statusline.sh \
 	symlink_done
 
 ${HOME}/.zshrc:
@@ -29,6 +33,16 @@ ${HOME}/.gitignore:
 
 ${HOME}/startship:
 	ln -fs $(DOTFILES)/startship.toml ${HOME}/.config/starship.toml
+
+${HOME}/.claude/skills:
+	rm -rf ${HOME}/.claude/skills
+	ln -s $(DOTFILES)/.claude/skills ${HOME}/.claude/skills
+
+${HOME}/.claude/settings.json:
+	ln -fs $(DOTFILES)/.claude/settings.json ${HOME}/.claude/settings.json
+
+${HOME}/.claude/statusline.sh:
+	ln -fs $(DOTFILES)/.claude/statusline.sh ${HOME}/.claude/statusline.sh
 
 symlink_done:
 	@echo "Symlinked dotfiles."
