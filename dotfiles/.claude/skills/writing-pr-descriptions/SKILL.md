@@ -1,7 +1,6 @@
 ---
 name: writing-pr-descriptions
 description: Voice guide for writing PR descriptions. Use this skill for ALL PR creation and updates (via gh CLI or editing existing PRs). Contains your specific voice rules, anti-patterns, examples, and workflow. Never write PR descriptions without invoking this skill first.
-allowed-tools: [Bash, Read, Glob, Grep]
 ---
 
 # Writing PR Descriptions
@@ -9,10 +8,11 @@ allowed-tools: [Bash, Read, Glob, Grep]
 ## ⚡ QUICK START
 
 1. Check for project PR template: `.github/PULL_REQUEST_TEMPLATE.md`
-2. Gather changes: `git log main..HEAD --oneline` and `git diff main...HEAD --stat`
-3. Ask user for: Jira URL, Slack thread, screen recording (if UI)
-4. Draft using voice rules below
-5. Create PR: `gh pr create --draft --title "..." --body "..."`
+2. Asj user for base branch.
+3. Gather changes: `git log origin/<base>..HEAD --oneline` and `git diff origin/<base>...HEAD --stat` (where `<base>` is the PR target branch, usually `main`)
+4. Ask user for: Jira URL, Slack thread, screen recording (if UI)
+5. Draft using voice rules below
+6. Create PR: `gh pr create --draft --title "..." --body "..."`
 
 ---
 
@@ -48,10 +48,12 @@ allowed-tools: [Bash, Read, Glob, Grep]
 
 ❌ Checkbox-heavy validation sections
 ❌ Technical jargon when plain language works
-❌ Listing every file changed
+❌ Listing any file changed
 ❌ Business rule explanations (put in code comments)
 ❌ "Comprehensive" descriptions - less is more
 ❌ Placeholder links - ask for real URLs
+❌ Listing included commits
+❌ Display target and source branch information
 
 ### Scope Discipline
 
@@ -143,8 +145,8 @@ gh pr view --web
 ## Process Checklist
 
 - [ ] Read project PR template if exists
-- [ ] Review all commits: `git log main..HEAD`
-- [ ] Review file changes: `git diff main...HEAD --stat`
+- [ ] Review all commits: `git log origin/<base>..HEAD` (where `<base>` is PR target)
+- [ ] Review file changes: `git diff origin/<base>...HEAD --stat`
 - [ ] Ask user for Jira/Slack links
 - [ ] Ask user for screen recording (if UI change)
 - [ ] Draft description using voice rules
