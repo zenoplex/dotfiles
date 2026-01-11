@@ -18,6 +18,9 @@ zi light "zsh-users/zsh-autosuggestions"
 # brew
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
+# mise
+eval "$(mise activate zsh)"
+
 # control + g to jump to repo dir
 zi light migutw42/zsh-fzf-ghq
 
