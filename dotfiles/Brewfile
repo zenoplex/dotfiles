@@ -11,6 +11,7 @@ brew "starship"
 brew "mas"
 brew "bun"
 brew "mise"
+brew "shellcheck"
 # browser
 cask "firefox@developer-edition"
 cask "google-chrome@beta"
