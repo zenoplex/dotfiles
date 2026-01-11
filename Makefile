@@ -8,6 +8,7 @@ install: make_dir symlink install_brew install_brew_packages
 .PHONY: make_dir
 make_dir:
 	mkdir -p ${HOME}/.config/git
+	mkdir -p ${HOME}/.config/mise
 	mkdir -p ${HOME}/.claude
 
 # Symlink dotfiles
@@ -17,6 +18,7 @@ symlink: \
 	${HOME}/.gitconfig \
 	${HOME}/.gitignore \
 	${HOME}/startship \
+	${HOME}/.mise \
 	${HOME}/.claude/skills \
 	${HOME}/.claude/settings.json \
 	${HOME}/.claude/statusline.sh \
@@ -33,6 +35,9 @@ ${HOME}/.gitignore:
 
 ${HOME}/startship:
 	ln -fs $(DOTFILES)/startship.toml ${HOME}/.config/starship.toml
+
+${HOME}/.mise:
+	ln -fs $(DOTFILES)/mise/config.toml ${HOME}/.config/mise/config.toml
 
 ${HOME}/.claude/skills:
 	rm -rf ${HOME}/.claude/skills
