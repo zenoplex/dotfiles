@@ -15,11 +15,6 @@ zicompinit
 # suggestions
 zi light "zsh-users/zsh-autosuggestions"
 
-# nvm
-export NVM_COMPLETION=true
-export NVM_AUTO_USE=true
-zi light "lukechilds/zsh-nvm"
-
 # brew
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
@@ -31,6 +26,3 @@ eval "$(starship init zsh)"
 
 # direnv
 eval "$(direnv hook zsh)"
-
-# rbenv
-eval "$(rbenv init - zsh)"
