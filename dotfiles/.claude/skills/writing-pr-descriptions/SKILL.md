@@ -8,7 +8,7 @@ description: Voice guide for writing PR descriptions. Use this skill for ALL PR 
 ## ⚡ QUICK START
 
 1. Check for project PR template: `.github/PULL_REQUEST_TEMPLATE.md`
-2. Asj user for base branch.
+2. If user has provided a PR then gather information from the PR via `gh pr` or else ask user for base branch
 3. Gather changes: `git log origin/<base>..HEAD --oneline` and `git diff origin/<base>...HEAD --stat` (where `<base>` is the PR target branch, usually `main`)
 4. Ask user for: Jira URL, Slack thread, screen recording (if UI)
 5. Draft using voice rules below
