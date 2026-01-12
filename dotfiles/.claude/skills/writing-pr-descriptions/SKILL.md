@@ -12,7 +12,8 @@ description: Voice guide for writing PR descriptions. Use this skill for ALL PR 
 3. Gather changes: `git log origin/<base>..HEAD --oneline` and `git diff origin/<base>...HEAD --stat` (where `<base>` is the PR target branch, usually `main`)
 4. Ask user for: Jira URL, Slack thread, screen recording (if UI)
 5. Draft using voice rules below
-6. Create PR: `gh pr create --draft --title "..." --body "..."`
+6. Try to always use `--body-file` option to create or edit pr body
+7. Create PR: `gh pr create --draft --title "..." --body-file "..."`
 
 ---
 
