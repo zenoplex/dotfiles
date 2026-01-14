@@ -7,13 +7,12 @@ description: Voice guide for writing PR descriptions. Use this skill for ALL PR 
 
 ## ⚡ QUICK START
 
-1. Check for project PR template: `.github/PULL_REQUEST_TEMPLATE.md`
+1. Check for project PR template: `.github/PULL_REQUEST_TEMPLATE.md` or `.github/pull_request_template.md`
 2. If user has provided a PR then gather information from the PR via `gh pr` or else ask user for base branch
 3. Gather changes: `git log origin/<base>..HEAD --oneline` and `git diff origin/<base>...HEAD --stat` (where `<base>` is the PR target branch, usually `main`)
 4. Ask user for: Jira URL, Slack thread, screen recording (if UI)
 5. Draft using voice rules below
-6. Try to always use `--body-file` option to create or edit pr body
-7. Create PR: `gh pr create --draft --title "..." --body-file "..."`
+6. Always use `--body-file` option to create or edit pr body with `gh` command
 
 ---
 
@@ -28,7 +27,7 @@ description: Voice guide for writing PR descriptions. Use this skill for ALL PR 
 
 ### Conciseness Rules
 
-- **What section**: Include every significant change theme - no cap. Could be 2 bullets, could be 8. Whatever fits the PR.
+- **What section**: Include every significant change - no cap. Could be 2 bullets, could be 8. Whatever fits the PR.
 - **Why section**: 1-3 bullets (not a paragraph). Focus on user benefit.
 - **Validation**: 10 steps MAX. Narrative "Expect to..." style.
 
@@ -47,7 +46,6 @@ description: Voice guide for writing PR descriptions. Use this skill for ALL PR 
 
 ### What NOT to Do
 
-❌ Checkbox-heavy validation sections
 ❌ Technical jargon when plain language works
 ❌ Listing any file changed
 ❌ Business rule explanations (put in code comments)
@@ -93,19 +91,6 @@ description: Voice guide for writing PR descriptions. Use this skill for ALL PR 
 
 - This dataset is the first appearance of archived items in the app
 - While users gain an understanding of how to interpret these items, we want them to have the ability to hide them
-
-## 👩‍🔬 How to validate
-
-1. `./bin/dev.sh` + `cd frontend` + `npm start`
-2. Expect to **not** see the "Include archived items" toggle
-3. Select a dataset with archived items
-4. Expect to see the toggle now
-5. Query a few items, including one that's archived (look for the `[archived]` badge)
-6. Expect to see the archived item in the list, detail view, and charts
-7. Toggle archived items off
-8. Expect the archived item's chip to be disabled
-9. Expect the disabled item's tooltip to explain why
-10. Expect the archived item to no longer appear in your views
 
 ## 🔖 Related links
 
