@@ -22,6 +22,7 @@ symlink: \
 	${HOME}/.claude/skills \
 	${HOME}/.claude/settings.json \
 	${HOME}/.claude/statusline.sh \
+	${HOME}/.claude/CLAUDE.md \
 	symlink_done
 
 ${HOME}/.zshrc:
@@ -48,6 +49,9 @@ ${HOME}/.claude/settings.json:
 
 ${HOME}/.claude/statusline.sh:
 	ln -fs $(DOTFILES)/.claude/statusline.sh ${HOME}/.claude/statusline.sh
+
+${HOME}/.claude/CLAUDE.md:
+	ln -fs $(DOTFILES)/.claude/CLAUDE.md ${HOME}/.claude/CLAUDE.md
 
 symlink_done:
 	@echo "Symlinked dotfiles."
