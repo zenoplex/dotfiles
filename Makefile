@@ -15,10 +15,10 @@ make_dir:
 .PHONY: symlink
 symlink: \
 	${HOME}/.zshrc \
-	${HOME}/.gitconfig \
-	${HOME}/.gitignore \
+	${HOME}/.config/git/config \
+	${HOME}/.config/git/ignore \
 	${HOME}/startship \
-	${HOME}/.mise \
+	${HOME}/.config/mise/config.toml \
 	${HOME}/.claude/skills \
 	${HOME}/.claude/settings.json \
 	${HOME}/.claude/statusline.sh \
@@ -26,19 +26,19 @@ symlink: \
 	symlink_done
 
 ${HOME}/.zshrc:
-	ln -fs $(DOTFILES)/.zshrc ${HOME}/.zshrc
+	ln -fs $(DOTFILES)/.zshrc $@
 
-${HOME}/.gitconfig:
-	ln -fs $(DOTFILES)/.gitconfig ${HOME}/.config/git/config
+${HOME}/.config/git/config:
+	ln -fs $(DOTFILES)/.gitconfig $@
 
-${HOME}/.gitignore:
-	ln -fs $(DOTFILES)/.gitignore ${HOME}/.config/git/ignore
+${HOME}/.config/git/ignore:
+	ln -fs $(DOTFILES)/.gitignore $@
 
 ${HOME}/startship:
 	ln -fs $(DOTFILES)/startship.toml ${HOME}/.config/starship.toml
 
-${HOME}/.mise:
-	ln -fs $(DOTFILES)/mise/config.toml ${HOME}/.config/mise/config.toml
+${HOME}/.config/mise/config.toml:
+	ln -fs $(DOTFILES)/mise/config.toml $@
 
 ${HOME}/.claude/skills:
 	rm -rf ${HOME}/.claude/skills
