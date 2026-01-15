@@ -53,6 +53,7 @@ description: Voice guide for writing PR descriptions. Use this skill for ALL PR 
 ❌ Placeholder links - ask for real URLs
 ❌ Listing included commits
 ❌ Display target and source branch information
+❌ Never include your commit
 
 ### Scope Discipline
 
