@@ -20,6 +20,7 @@ symlink: \
 	${HOME}/startship \
 	${HOME}/.config/mise/config.toml \
 	${HOME}/.claude/skills \
+	${HOME}/.claude/agents \
 	${HOME}/.claude/settings.json \
 	${HOME}/.claude/statusline.sh \
 	${HOME}/.claude/CLAUDE.md \
@@ -43,6 +44,10 @@ ${HOME}/.config/mise/config.toml:
 ${HOME}/.claude/skills:
 	rm -rf ${HOME}/.claude/skills
 	ln -s $(DOTFILES)/.claude/skills ${HOME}/.claude/skills
+
+${HOME}/.claude/agents:
+	rm -rf ${HOME}/.claude/agents
+	ln -s $(DOTFILES)/.claude/agents ${HOME}/.claude/agents
 
 ${HOME}/.claude/settings.json:
 	ln -fs $(DOTFILES)/.claude/settings.json ${HOME}/.claude/settings.json
