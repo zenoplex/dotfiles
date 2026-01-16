@@ -23,6 +23,7 @@ symlink: \
 	${HOME}/.claude/agents \
 	${HOME}/.claude/settings.json \
 	${HOME}/.claude/statusline.sh \
+	${HOME}/.claude/AGENTS.md \
 	${HOME}/.claude/CLAUDE.md \
 	symlink_done
 
@@ -55,8 +56,11 @@ ${HOME}/.claude/settings.json:
 ${HOME}/.claude/statusline.sh:
 	ln -fs $(DOTFILES)/.claude/statusline.sh ${HOME}/.claude/statusline.sh
 
+${HOME}/.claude/AGENTS.md:
+	ln -fs $(DOTFILES)/.claude/AGENTS.md ${HOME}/.claude/AGENTS.md
+
 ${HOME}/.claude/CLAUDE.md:
-	ln -fs $(DOTFILES)/.claude/CLAUDE.md ${HOME}/.claude/CLAUDE.md
+	ln -fs ${HOME}/.claude/AGENTS.md ${HOME}/.claude/CLAUDE.md
 
 symlink_done:
 	@echo "Symlinked dotfiles."
