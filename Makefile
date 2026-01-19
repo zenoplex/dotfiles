@@ -19,12 +19,8 @@ symlink: \
 	${HOME}/.config/git/ignore \
 	${HOME}/startship \
 	${HOME}/.config/mise/config.toml \
-	${HOME}/.claude/skills \
-	${HOME}/.claude/agents \
 	${HOME}/.claude/settings.json \
 	${HOME}/.claude/statusline.sh \
-	${HOME}/.claude/AGENTS.md \
-	${HOME}/.claude/CLAUDE.md \
 	symlink_done
 
 ${HOME}/.zshrc:
@@ -42,25 +38,11 @@ ${HOME}/startship:
 ${HOME}/.config/mise/config.toml:
 	ln -fs $(DOTFILES)/mise/config.toml $@
 
-${HOME}/.claude/skills:
-	rm -rf ${HOME}/.claude/skills
-	ln -s $(DOTFILES)/.claude/skills ${HOME}/.claude/skills
-
-${HOME}/.claude/agents:
-	rm -rf ${HOME}/.claude/agents
-	ln -s $(DOTFILES)/.claude/agents ${HOME}/.claude/agents
-
 ${HOME}/.claude/settings.json:
 	ln -fs $(DOTFILES)/.claude/settings.json ${HOME}/.claude/settings.json
 
 ${HOME}/.claude/statusline.sh:
 	ln -fs $(DOTFILES)/.claude/statusline.sh ${HOME}/.claude/statusline.sh
-
-${HOME}/.claude/AGENTS.md:
-	ln -fs $(DOTFILES)/.claude/AGENTS.md ${HOME}/.claude/AGENTS.md
-
-${HOME}/.claude/CLAUDE.md:
-	ln -fs ${HOME}/.claude/AGENTS.md ${HOME}/.claude/CLAUDE.md
 
 symlink_done:
 	@echo "Symlinked dotfiles."
