@@ -1,5 +1,6 @@
 PWD := $(shell pwd)
 DOTFILES := $(PWD)/dotfiles
+-include Makefile.local
 
 .PHONY: install
 install: make_dir symlink install_brew install_brew_packages
@@ -10,6 +11,7 @@ make_dir:
 	mkdir -p ${HOME}/.config/git
 	mkdir -p ${HOME}/.config/mise
 	mkdir -p ${HOME}/.claude
+	mkdir -p ${HOME}/.claude/plugins
 
 # Symlink dotfiles
 .PHONY: symlink
@@ -21,6 +23,7 @@ symlink: \
 	${HOME}/.config/mise/config.toml \
 	${HOME}/.claude/settings.json \
 	${HOME}/.claude/statusline.sh \
+	symlink_obsidian_claude \
 	symlink_done
 
 ${HOME}/.zshrc:
@@ -43,6 +46,20 @@ ${HOME}/.claude/settings.json:
 
 ${HOME}/.claude/statusline.sh:
 	ln -fs $(DOTFILES)/.claude/statusline.sh ${HOME}/.claude/statusline.sh
+
+
+.PHONY: symlink_obsidian_claude
+symlink_obsidian_claude:
+ifndef OBSIDIAN_CLAUDE
+	@echo "ERROR: OBSIDIAN_CLAUDE is not set"
+	@echo "Create a Makefile.local file with:"
+	@echo "  OBSIDIAN_CLAUDE = /path/to/your/obsidian/claude"
+	@exit 1
+endif
+	@ln -fs $(OBSIDIAN_CLAUDE)/agents ${HOME}/.claude/agents
+	@ln -fs $(OBSIDIAN_CLAUDE)/skills ${HOME}/.claude/skills
+	@ln -fs $(OBSIDIAN_CLAUDE)/marketplaces ${HOME}/.claude/plugins/marketplaces
+	@ln -fs $(OBSIDIAN_CLAUDE)/AGENTS.md ${HOME}/.claude/CLAUDE.md
 
 symlink_done:
 	@echo "Symlinked dotfiles."

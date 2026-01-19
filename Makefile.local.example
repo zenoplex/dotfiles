@@ -1,0 +1,4 @@
+# Copy this file to Makefile.local and set your paths
+
+# Path to your Obsidian Claude directory containing agents, skills, and marketplaces
+OBSIDIAN_CLAUDE = $(HOME)/YOUR-VAULT-PATH
