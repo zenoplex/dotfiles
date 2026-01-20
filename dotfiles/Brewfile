@@ -30,7 +30,7 @@ cask "obsidian"
 cask "cleanshot"
 cask "appcleaner"
 # llm
-cask "superwhisper"
+cask "voiceink"
 cask "claude-code"
 cask "copilot-cli"
 # other
