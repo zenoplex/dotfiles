@@ -3,4 +3,5 @@ auto_install = true
 legacy_version_file = true
 
 [tools]
+bun = "latest"
 node = "lts"
