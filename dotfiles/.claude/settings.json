@@ -5,6 +5,6 @@
   "model": "opusplan",
   "statusLine": {
     "type": "command",
-    "command": "/bin/bash ~/.claude/statusline.sh"
+    "command": "bunx ccusage statusline"
   }
 }

@@ -44,10 +44,6 @@ ${HOME}/.config/mise/config.toml:
 ${HOME}/.claude/settings.json:
 	ln -fs $(DOTFILES)/.claude/settings.json ${HOME}/.claude/settings.json
 
-${HOME}/.claude/statusline.sh:
-	ln -fs $(DOTFILES)/.claude/statusline.sh ${HOME}/.claude/statusline.sh
-
-
 .PHONY: symlink_obsidian_claude
 symlink_obsidian_claude:
 ifndef OBSIDIAN_CLAUDE
