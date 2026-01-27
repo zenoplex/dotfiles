@@ -12,6 +12,7 @@ brew "mas"
 brew "bun"
 brew "mise"
 brew "shellcheck"
+brew "uv"
 # browser
 cask "firefox@developer-edition"
 cask "google-chrome@beta"
