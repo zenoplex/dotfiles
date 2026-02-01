@@ -54,13 +54,31 @@ ifndef OBSIDIAN_CLAUDE
 endif
 	@link_dir () { \
 		src="$$1"; dst="$$2"; \
+		if [ -e "$$dst" ] && [ ! -L "$$dst" ]; then \
+			echo "ERROR: $$dst exists and is not a symlink; refusing to create nested symlink"; \
+			exit 1; \
+		fi; \
 		ln -fs "$$src" "$$dst"; \
+	}; \
+	link_skill_dirs () { \
+		src_root="$$1"; dst_root="$$2"; \
+		mkdir -p "$$dst_root"; \
+		for d in "$$src_root"/*; do \
+			[ -d "$$d" ] || continue; \
+			name="$${d##*/}"; \
+			dst="$$dst_root/$$name"; \
+			if [ -e "$$dst" ] && [ ! -L "$$dst" ]; then \
+				echo "ERROR: $$dst exists and is not a symlink; refusing to create nested symlink"; \
+				exit 1; \
+			fi; \
+			ln -fs "$$d" "$$dst"; \
+		done; \
 	}; \
 	link_dir "$(OBSIDIAN_CLAUDE)/agents" "${HOME}/.claude/agents"; \
 	link_dir "$(OBSIDIAN_CLAUDE)/skills" "${HOME}/.claude/skills"; \
 	link_dir "$(OBSIDIAN_CLAUDE)/marketplaces" "${HOME}/.claude/plugins/marketplaces"; \
 	link_dir "$(OBSIDIAN_CLAUDE)/AGENTS.md" "${HOME}/.claude/CLAUDE.md"; \
-	link_dir "$(OBSIDIAN_CLAUDE)/skills" "${HOME}/.codex/skills"; \
+	link_skill_dirs "$(OBSIDIAN_CLAUDE)/skills" "${HOME}/.codex/skills"; \
 	link_dir "$(OBSIDIAN_CLAUDE)/AGENTS.md" "${HOME}/.codex/AGENTS.md"
 
 symlink_done:
