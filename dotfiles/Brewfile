@@ -33,6 +33,7 @@ cask "appcleaner"
 # llm
 cask "voiceink"
 cask "claude-code"
+cask "codex"
 cask "copilot-cli"
 # other
 cask "font-hackgen-nerd"
