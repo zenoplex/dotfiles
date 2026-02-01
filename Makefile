@@ -19,7 +19,7 @@ symlink: \
 	${HOME}/.zshrc \
 	${HOME}/.config/git/config \
 	${HOME}/.config/git/ignore \
-	${HOME}/startship \
+	${HOME}/.config/starship.toml \
 	${HOME}/.config/mise/config.toml \
 	${HOME}/.claude/settings.json \
 	${HOME}/.claude/statusline.sh \
@@ -35,14 +35,17 @@ ${HOME}/.config/git/config:
 ${HOME}/.config/git/ignore:
 	ln -fs $(DOTFILES)/.gitignore $@
 
-${HOME}/startship:
-	ln -fs $(DOTFILES)/startship.toml ${HOME}/.config/starship.toml
+${HOME}/.config/starship.toml:
+	ln -fs $(DOTFILES)/starship.toml ${HOME}/.config/starship.toml
 
 ${HOME}/.config/mise/config.toml:
 	ln -fs $(DOTFILES)/mise/config.toml $@
 
 ${HOME}/.claude/settings.json:
 	ln -fs $(DOTFILES)/.claude/settings.json ${HOME}/.claude/settings.json
+
+${HOME}/.claude/statusline.sh:
+	ln -fs $(DOTFILES)/.claude/statusline.sh ${HOME}/.claude/statusline.sh
 
 .PHONY: symlink_obsidian_claude
 symlink_obsidian_claude:
