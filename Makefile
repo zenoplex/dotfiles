@@ -12,6 +12,7 @@ make_dir:
 	mkdir -p ${HOME}/.config/mise
 	mkdir -p ${HOME}/.claude
 	mkdir -p ${HOME}/.claude/plugins
+	mkdir -p ${HOME}/.codex
 
 # Symlink dotfiles
 .PHONY: symlink
@@ -51,10 +52,16 @@ ifndef OBSIDIAN_CLAUDE
 	@echo "  OBSIDIAN_CLAUDE = /path/to/your/obsidian/claude"
 	@exit 1
 endif
-	@ln -fs $(OBSIDIAN_CLAUDE)/agents ${HOME}/.claude/agents
-	@ln -fs $(OBSIDIAN_CLAUDE)/skills ${HOME}/.claude/skills
-	@ln -fs $(OBSIDIAN_CLAUDE)/marketplaces ${HOME}/.claude/plugins/marketplaces
-	@ln -fs $(OBSIDIAN_CLAUDE)/AGENTS.md ${HOME}/.claude/CLAUDE.md
+	@link_dir () { \
+		src="$$1"; dst="$$2"; \
+		ln -fs "$$src" "$$dst"; \
+	}; \
+	link_dir "$(OBSIDIAN_CLAUDE)/agents" "${HOME}/.claude/agents"; \
+	link_dir "$(OBSIDIAN_CLAUDE)/skills" "${HOME}/.claude/skills"; \
+	link_dir "$(OBSIDIAN_CLAUDE)/marketplaces" "${HOME}/.claude/plugins/marketplaces"; \
+	link_dir "$(OBSIDIAN_CLAUDE)/AGENTS.md" "${HOME}/.claude/CLAUDE.md"; \
+	link_dir "$(OBSIDIAN_CLAUDE)/skills" "${HOME}/.codex/skills"; \
+	link_dir "$(OBSIDIAN_CLAUDE)/AGENTS.md" "${HOME}/.codex/AGENTS.md"
 
 symlink_done:
 	@echo "Symlinked dotfiles."
