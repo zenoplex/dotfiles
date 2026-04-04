@@ -1,6 +1,7 @@
 tap "homebrew/bundle"
 tap "oven-sh/bun"
 tap "leoafarias/fvm"
+tap "manaflow-ai/cmux"
 brew "direnv"
 brew "fzf"
 brew "ghq"
@@ -23,6 +24,7 @@ cask "1password"
 cask "docker-desktop"
 # terminal
 cask "ghostty"
+cask "cmux"
 # qol
 cask "karabiner-elements"
 cask "tg-pro"
