@@ -11,3 +11,5 @@ Thumbs.db
 
 # settings
 .vscode
+
+**/.claude/settings.local.json

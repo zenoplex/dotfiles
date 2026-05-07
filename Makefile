@@ -2,6 +2,15 @@ PWD := $(shell pwd)
 DOTFILES := $(PWD)/dotfiles
 -include Makefile.local
 
+MANAGED_LINKS := \
+	$(DOTFILES)/.zshrc::$(HOME)/.zshrc \
+	$(DOTFILES)/.gitconfig::$(HOME)/.config/git/config \
+	$(DOTFILES)/.gitignore::$(HOME)/.config/git/ignore \
+	$(DOTFILES)/.gitmessage.txt::$(HOME)/.config/git/message \
+	$(DOTFILES)/starship.toml::$(HOME)/.config/starship.toml \
+	$(DOTFILES)/mise/config.toml::$(HOME)/.config/mise/config.toml \
+	$(DOTFILES)/.claude/settings.json::$(HOME)/.claude/settings.json
+
 .PHONY: install
 install: make_dir symlink install_brew install_brew_packages
 
@@ -19,32 +28,110 @@ make_dir:
 # Symlink dotfiles
 .PHONY: symlink
 symlink: \
-	${HOME}/.zshrc \
-	${HOME}/.config/git/config \
-	${HOME}/.config/git/ignore \
-	${HOME}/.config/starship.toml \
-	${HOME}/.config/mise/config.toml \
-	${HOME}/.claude/settings.json \
+	_managed_symlink \
 	symlink_obsidian_claude \
 	symlink_done
 
-${HOME}/.zshrc:
-	ln -fs $(DOTFILES)/.zshrc $@
+.PHONY: _managed_symlink
+_managed_symlink:
+	@status=0; ok_count=0; linked_count=0; failed_count=0; \
+	for link in $(MANAGED_LINKS); do \
+		src="$${link%%::*}"; dst="$${link#*::}"; \
+		if [ ! -e "$$src" ]; then \
+			echo "failed $$dst (missing source: $$src)"; \
+			status=1; failed_count=$$((failed_count + 1)); \
+			continue; \
+		fi; \
+		mkdir -p "$$(dirname "$$dst")"; \
+		if [ -L "$$dst" ]; then \
+			current="$$(readlink "$$dst")"; \
+			if [ "$$current" = "$$src" ]; then \
+				echo "ok $$dst -> $$src"; \
+				ok_count=$$((ok_count + 1)); \
+				continue; \
+			fi; \
+			rm "$$dst"; \
+			ln -s "$$src" "$$dst"; \
+			echo "linked $$dst -> $$src"; \
+			linked_count=$$((linked_count + 1)); \
+			continue; \
+		fi; \
+		if [ -e "$$dst" ]; then \
+			echo "failed $$dst (exists and is not a symlink)"; \
+			status=1; failed_count=$$((failed_count + 1)); \
+			continue; \
+		fi; \
+		ln -s "$$src" "$$dst"; \
+		echo "linked $$dst -> $$src"; \
+		linked_count=$$((linked_count + 1)); \
+	done; \
+	echo "Managed links: $$ok_count ok, $$linked_count linked, $$failed_count failed."; \
+	if [ "$$status" -eq 0 ]; then \
+		echo "Managed links succeeded."; \
+	else \
+		echo "Managed links failed."; \
+	fi; \
+	exit "$$status"
 
-${HOME}/.config/git/config:
-	ln -fs $(DOTFILES)/.gitconfig $@
-
-${HOME}/.config/git/ignore:
-	ln -fs $(DOTFILES)/.gitignore $@
-
-${HOME}/.config/starship.toml:
-	ln -fs $(DOTFILES)/starship.toml ${HOME}/.config/starship.toml
-
-${HOME}/.config/mise/config.toml:
-	ln -fs $(DOTFILES)/mise/config.toml $@
-
-${HOME}/.claude/settings.json:
-	ln -fs $(DOTFILES)/.claude/settings.json ${HOME}/.claude/settings.json
+.PHONY: verify_symlink
+verify_symlink:
+	@tmp="$$(mktemp -d)"; verify_status=0; \
+	trap 'rm -rf "$$tmp"' EXIT INT TERM; \
+	mkdir -p "$$tmp/home"; \
+	first_log="$$tmp/first.log"; \
+	if ! $(MAKE) --no-print-directory _managed_symlink HOME="$$tmp/home" DOTFILES="$(DOTFILES)" > "$$first_log" 2>&1; then \
+		echo "failed verify_symlink: first run failed"; \
+		cat "$$first_log"; \
+		verify_status=1; \
+	else \
+		linked_count="$$(grep -c '^linked ' "$$first_log" || true)"; \
+		if [ "$$linked_count" -eq 7 ]; then \
+			echo "ok verify_symlink first run linked 7 managed links"; \
+		else \
+			echo "failed verify_symlink: expected 7 linked lines, got $$linked_count"; \
+			cat "$$first_log"; \
+			verify_status=1; \
+		fi; \
+	fi; \
+	second_log="$$tmp/second.log"; \
+	if ! $(MAKE) --no-print-directory _managed_symlink HOME="$$tmp/home" DOTFILES="$(DOTFILES)" > "$$second_log" 2>&1; then \
+		echo "failed verify_symlink: second run failed"; \
+		cat "$$second_log"; \
+		verify_status=1; \
+	else \
+		ok_count="$$(grep -c '^ok ' "$$second_log" || true)"; \
+		if [ "$$ok_count" -eq 7 ]; then \
+			echo "ok verify_symlink second run reported 7 existing links"; \
+		else \
+			echo "failed verify_symlink: expected 7 ok lines, got $$ok_count"; \
+			cat "$$second_log"; \
+			verify_status=1; \
+		fi; \
+	fi; \
+	mkdir -p "$$tmp/conflict-home"; \
+	printf 'local config\n' > "$$tmp/conflict-home/.zshrc"; \
+	conflict_log="$$tmp/conflict.log"; \
+	if $(MAKE) --no-print-directory _managed_symlink HOME="$$tmp/conflict-home" DOTFILES="$(DOTFILES)" > "$$conflict_log" 2>&1; then \
+		echo "failed verify_symlink: existing non-symlink destination did not fail"; \
+		cat "$$conflict_log"; \
+		verify_status=1; \
+	else \
+		echo "ok verify_symlink existing non-symlink destination failed safely"; \
+	fi; \
+	missing_log="$$tmp/missing.log"; \
+	if $(MAKE) --no-print-directory _managed_symlink HOME="$$tmp/missing-home" DOTFILES="$(DOTFILES)" MANAGED_LINKS="$$tmp/missing-source::$$tmp/missing-home/missing" > "$$missing_log" 2>&1; then \
+		echo "failed verify_symlink: missing source did not fail"; \
+		cat "$$missing_log"; \
+		verify_status=1; \
+	else \
+		echo "ok verify_symlink missing source failed safely"; \
+	fi; \
+	if [ "$$verify_status" -eq 0 ]; then \
+		echo "verify_symlink succeeded."; \
+	else \
+		echo "verify_symlink failed."; \
+	fi; \
+	exit "$$verify_status"
 
 .PHONY: symlink_obsidian_claude
 symlink_obsidian_claude:
