@@ -12,6 +12,8 @@ make_dir:
 	mkdir -p ${HOME}/.config/mise
 	mkdir -p ${HOME}/.claude
 	mkdir -p ${HOME}/.claude/plugins
+	mkdir -p ${HOME}/.claude/skills
+	mkdir -p ${HOME}/.agents/skills
 	mkdir -p ${HOME}/.codex
 
 # Symlink dotfiles
@@ -75,10 +77,10 @@ endif
 		done; \
 	}; \
 	link_dir "$(OBSIDIAN_CLAUDE)/agents" "${HOME}/.claude/agents"; \
-	link_dir "$(OBSIDIAN_CLAUDE)/skills" "${HOME}/.claude/skills"; \
+	link_skill_dirs "$(OBSIDIAN_CLAUDE)/skills" "${HOME}/.claude/skills"; \
 	link_dir "$(OBSIDIAN_CLAUDE)/marketplaces" "${HOME}/.claude/plugins/marketplaces"; \
 	link_dir "$(OBSIDIAN_CLAUDE)/AGENTS.md" "${HOME}/.claude/CLAUDE.md"; \
-	link_skill_dirs "$(OBSIDIAN_CLAUDE)/skills" "${HOME}/.codex/skills"; \
+	link_skill_dirs "$(OBSIDIAN_CLAUDE)/skills" "${HOME}/.agents/skills"; \
 	link_dir "$(OBSIDIAN_CLAUDE)/AGENTS.md" "${HOME}/.codex/AGENTS.md"
 
 symlink_done:
