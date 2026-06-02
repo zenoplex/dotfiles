@@ -22,7 +22,6 @@ cask "postman"
 cask "1password"
 cask "docker-desktop"
 # terminal
-cask "ghostty"
 cask "cmux"
 # qol
 cask "karabiner-elements"
