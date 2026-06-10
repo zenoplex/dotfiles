@@ -2,7 +2,6 @@
   "env": {
     "ENABLE_TOOL_SEARCH": "true"
   },
-  "model": "opusplan",
   "attribution": {
     "commit": "",
     "pr": ""
@@ -16,6 +15,7 @@
       "Bash(git push:*)"
     ]
   },
+  "model": "opusplan",
   "statusLine": {
     "type": "command",
     "command": "bunx ccusage statusline"
@@ -26,5 +26,25 @@
     "security-guidance@claude-plugins-official": true,
     "obsidian@obsidian-skills": true,
     "understand-anything@understand-anything": true
+  },
+  "extraKnownMarketplaces": {
+    "openai-codex": {
+      "source": {
+        "source": "github",
+        "repo": "openai/codex-plugin-cc"
+      }
+    },
+    "understand-anything": {
+      "source": {
+        "source": "github",
+        "repo": "Egonex-AI/Understand-Anything"
+      }
+    },
+    "obsidian-skills": {
+      "source": {
+        "source": "github",
+        "repo": "kepano/obsidian-skills"
+      }
+    }
   }
 }
