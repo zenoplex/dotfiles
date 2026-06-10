@@ -1,5 +1,4 @@
-PWD := $(shell pwd)
-DOTFILES := $(PWD)/dotfiles
+DOTFILES := $(CURDIR)/dotfiles
 -include Makefile.local
 
 MANAGED_LINKS := \
@@ -69,13 +68,12 @@ endif
 
 # Install Homebrew
 .PHONY: install_brew
-BREW := $(shell command -v brew 2>/dev/null)
 install_brew:
-ifdef BREW
-	@echo "Homebrew is installed."
-else
-	/bin/bash -c "$$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-endif
+	@if command -v brew >/dev/null 2>&1; then \
+		echo "Homebrew is installed."; \
+	else \
+		/bin/bash -c "$$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"; \
+	fi
 
 # Install Homebrew packages
 .PHONY: install_brew_packages
