@@ -2,6 +2,9 @@
 auto_install = true
 legacy_version_file = true
 
+[settings.ruby]
+compile = false
+
 [tools]
 bun = "latest"
 node = "lts"
