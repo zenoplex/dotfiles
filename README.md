@@ -16,7 +16,7 @@ Shell, git, prompt, mise and Claude Code settings, plus a Brewfile, for Apple Si
    make install
    ```
 
-   This links the dotfiles into `~`, installs Homebrew if it's missing, installs everything in `dotfiles/Brewfile`, and installs the mise tools (node, bun). Anything already at a link destination is moved to `~/.dotfiles-backup/<timestamp>/` first. Re-running it is safe.
+   This links the dotfiles into `~`, installs Homebrew if it's missing, installs everything in `dotfiles/Brewfile`, and installs the mise tools (node, bun). Anything already at a link destination is moved to `~/.dotfiles-backup/<timestamp>-<pid>/` first, and the run stops if a move or link fails. Re-running it is safe.
 
 3. Open a new terminal, then sign in to GitHub. Git uses `gh` for GitHub credentials:
 

@@ -11,29 +11,37 @@ MANAGED_LINKS := \
 	$(DOTFILES)/.claude/settings.json::$(HOME)/.claude/settings.json
 
 # Shared shell function: link <src> <dst>
-# Skips if the destination already links to the source. Anything else at the
-# destination is moved under ~/.dotfiles-backup/<timestamp>/ before linking.
-# Creates parent directories as needed.
+# Skips if the destination already resolves to the source. Anything else at the
+# destination is moved under ~/.dotfiles-backup/<timestamp>-<pid>/ before linking.
+# Creates parent directories as needed. Returns 1 if a move or link fails.
 define LINK_FN
 backup_root="$(HOME)/.dotfiles-backup/$$(date +%Y%m%d-%H%M%S)-$$$$"; \
 link () { \
-	src="$$1"; dst="$$2"; \
+	src="$$1"; dst="$$2"; backup=""; \
 	if [ ! -e "$$src" ]; then \
 		echo "skipped $$dst (missing source: $$src)"; \
 		return; \
 	fi; \
-	if [ -L "$$dst" ] && [ "$$(readlink "$$dst")" = "$$src" ]; then \
+	if [ -L "$$dst" ] && [ "$$dst" -ef "$$src" ]; then \
 		echo "skipped $$dst (already linked)"; \
 		return; \
 	fi; \
 	if [ -e "$$dst" ] || [ -L "$$dst" ]; then \
 		backup="$$backup_root/$${dst#$(HOME)/}"; \
-		mkdir -p "$$(dirname "$$backup")"; \
-		mv "$$dst" "$$backup"; \
+		mkdir -p "$$(dirname "$$backup")" && mv "$$dst" "$$backup" || { \
+			echo "ERROR: could not back up $$dst; left it in place"; \
+			return 1; \
+		}; \
 		echo "backed up $$dst to $$backup"; \
 	fi; \
-	mkdir -p "$$(dirname "$$dst")"; \
-	ln -s "$$src" "$$dst"; \
+	mkdir -p "$$(dirname "$$dst")" && ln -s "$$src" "$$dst" || { \
+		if [ -n "$$backup" ] && mv "$$backup" "$$dst"; then \
+			echo "ERROR: could not link $$dst; restored the original"; \
+		else \
+			echo "ERROR: could not link $$dst$${backup:+ (the original is in $$backup)}"; \
+		fi; \
+		return 1; \
+	}; \
 	echo "linked $$dst -> $$src"; \
 }
 endef
@@ -56,7 +64,7 @@ check_arch:
 symlink: check_arch
 	@$(LINK_FN); \
 	for pair in $(MANAGED_LINKS); do \
-		link "$${pair%%::*}" "$${pair#*::}"; \
+		link "$${pair%%::*}" "$${pair#*::}" || exit 1; \
 	done; \
 	echo "Symlinked dotfiles."
 
@@ -77,11 +85,11 @@ endif
 	for d in "$(OBSIDIAN_CLAUDE)/skills"/*; do \
 		[ -d "$$d" ] || continue; \
 		name="$${d##*/}"; \
-		link "$$d" "${HOME}/.claude/skills/$$name"; \
-		link "$$d" "${HOME}/.agents/skills/$$name"; \
+		link "$$d" "${HOME}/.claude/skills/$$name" || exit 1; \
+		link "$$d" "${HOME}/.agents/skills/$$name" || exit 1; \
 	done; \
-	link "$(OBSIDIAN_CLAUDE)/AGENTS.md" "${HOME}/.claude/CLAUDE.md"; \
-	link "$(OBSIDIAN_CLAUDE)/AGENTS.md" "${HOME}/.codex/AGENTS.md"; \
+	link "$(OBSIDIAN_CLAUDE)/AGENTS.md" "${HOME}/.claude/CLAUDE.md" && \
+	link "$(OBSIDIAN_CLAUDE)/AGENTS.md" "${HOME}/.codex/AGENTS.md" && \
 	echo "Symlinked agent files."
 
 # Install Homebrew
