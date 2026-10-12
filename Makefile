@@ -69,7 +69,7 @@ endif
 # Install Homebrew
 .PHONY: install_brew
 install_brew:
-	@if command -v brew >/dev/null 2>&1; then \
+	@if command -v brew >/dev/null 2>&1 || [ -x /opt/homebrew/bin/brew ]; then \
 		echo "Homebrew is installed."; \
 	else \
 		/bin/bash -c "$$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"; \
@@ -78,4 +78,4 @@ install_brew:
 # Install Homebrew packages
 .PHONY: install_brew_packages
 install_brew_packages:
-	brew bundle --file=$(DOTFILES)/Brewfile
+	$$(command -v brew || echo /opt/homebrew/bin/brew) bundle --file=$(DOTFILES)/Brewfile
