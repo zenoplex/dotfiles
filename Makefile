@@ -38,7 +38,7 @@ link () { \
 endef
 
 .PHONY: install
-install: symlink install_brew install_brew_packages install_mise_tools
+install: symlink install_brew install_brew_packages install_mise_tools install_mas_apps
 	@echo "NOTE: after Obsidian is installed and the vault is synced, run: make symlink_agents"
 
 # These dotfiles assume Homebrew at /opt/homebrew. uname -m reports x86_64 under
@@ -106,3 +106,9 @@ install_brew_packages: install_brew
 .PHONY: install_mise_tools
 install_mise_tools: symlink install_brew_packages
 	"$$(command -v mise || echo /opt/homebrew/bin/mise)" install
+
+# Install App Store apps last, so a signed-out App Store or a failed app can't
+# stop the steps above.
+.PHONY: install_mas_apps
+install_mas_apps: install_mise_tools
+	"$$(command -v brew || echo /opt/homebrew/bin/brew)" bundle --file="$(DOTFILES)/Brewfile.mas"
