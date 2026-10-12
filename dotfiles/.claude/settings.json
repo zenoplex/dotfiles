@@ -82,34 +82,16 @@
         "repo": "kepano/obsidian-skills"
       }
     },
-    "compound-engineering-plugin": {
-      "source": {
-        "source": "github",
-        "repo": "EveryInc/compound-engineering-plugin"
-      }
-    },
     "cloudflare": {
       "source": {
         "source": "github",
         "repo": "cloudflare/skills"
       }
     },
-    "superpowers-marketplace": {
-      "source": {
-        "source": "github",
-        "repo": "obra/superpowers-marketplace"
-      }
-    },
     "netresearch-claude-code-marketplace": {
       "source": {
         "source": "github",
         "repo": "netresearch/claude-code-marketplace"
-      }
-    },
-    "anthropic-agent-skills": {
-      "source": {
-        "source": "github",
-        "repo": "anthropics/skills"
       }
     },
     "ui-ux-pro-max-skill": {
