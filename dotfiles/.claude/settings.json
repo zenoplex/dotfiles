@@ -25,7 +25,9 @@
       "Bash(git push *:**)",
       "Bash(git push *refs/*)",
       "Bash(git push *--*)",
-      "Bash(git push * -*)"
+      "Bash(git push * -*)",
+      "Bash(git push *'*)",
+      "Bash(git push *\"*)"
     ]
   },
   "model": "opusplan",
