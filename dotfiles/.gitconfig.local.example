@@ -1,0 +1,9 @@
+# Copy this file to ~/.config/git/config.local and set your key path.
+# .gitconfig includes it last, so these settings stay out of this repo.
+
+[user]
+	signingkey = ~/.ssh/YOUR-KEY.pub
+[commit]
+	gpgsign = true
+[gpg]
+	format = ssh
