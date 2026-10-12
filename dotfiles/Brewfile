@@ -1,4 +1,3 @@
-tap "oven-sh/bun"
 tap "leoafarias/fvm"
 tap "manaflow-ai/cmux"
 brew "direnv"
