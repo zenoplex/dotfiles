@@ -1,5 +1,3 @@
-tap "leoafarias/fvm"
-tap "manaflow-ai/cmux"
 brew "direnv"
 brew "fzf"
 brew "ghq"
@@ -34,7 +32,6 @@ cask "voiceink"
 cask "claude-code"
 cask "claude"
 cask "codex"
-cask "codex-app"
 cask "copilot-cli"
 # other
 cask "font-hackgen-nerd"
