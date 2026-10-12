@@ -30,7 +30,7 @@ link () { \
 endef
 
 .PHONY: install
-install: symlink install_brew install_brew_packages
+install: symlink install_brew install_brew_packages install_mise_tools
 	@echo "NOTE: after Obsidian is installed and the vault is synced, run: make symlink_agents"
 
 # These dotfiles assume Homebrew at /opt/homebrew. uname -m reports x86_64 under
@@ -88,3 +88,9 @@ install_brew: check_arch
 .PHONY: install_brew_packages
 install_brew_packages: install_brew
 	"$$(command -v brew || echo /opt/homebrew/bin/brew)" bundle --file="$(DOTFILES)/Brewfile"
+
+# Install the tools in ~/.config/mise/config.toml. mise only auto-installs from an
+# activated interactive shell, so a fresh machine would have no bun or node yet.
+.PHONY: install_mise_tools
+install_mise_tools: symlink install_brew_packages
+	"$$(command -v mise || echo /opt/homebrew/bin/mise)" install
