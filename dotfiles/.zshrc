@@ -1,3 +1,6 @@
+# brew (first, so its completions are on fpath before compinit)
+[[ -x /opt/homebrew/bin/brew ]] && eval "$(/opt/homebrew/bin/brew shellenv)"
+
 if [[ ! -f $HOME/.zi/bin/zi.zsh ]]; then
   print -P "%F{33}▓▒░ %F{160}Installing (%F{33}z-shell/zi%F{160})…%f"
   command mkdir -p "$HOME/.zi" && command chmod go-rwX "$HOME/.zi"
@@ -15,17 +18,14 @@ zicompinit
 # suggestions
 zi light "zsh-users/zsh-autosuggestions"
 
-# brew
-eval "$(/opt/homebrew/bin/brew shellenv)"
-
 # mise
-eval "$(mise activate zsh)"
+(( $+commands[mise] )) && eval "$(mise activate zsh)"
 
 # control + g to jump to repo dir
 zi light migutw42/zsh-fzf-ghq
 
 # starship
-eval "$(starship init zsh)"
+(( $+commands[starship] )) && eval "$(starship init zsh)"
 
 # direnv
-eval "$(direnv hook zsh)"
+(( $+commands[direnv] )) && eval "$(direnv hook zsh)"
