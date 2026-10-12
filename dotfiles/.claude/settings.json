@@ -49,7 +49,12 @@
     "playground@claude-plugins-official": true,
     "security-guidance@claude-plugins-official": true,
     "obsidian@obsidian-skills": true,
-    "understand-anything@understand-anything": true
+    "understand-anything@understand-anything": true,
+    "cloudflare@cloudflare": true,
+    "superpowers@claude-plugins-official": true,
+    "retro@netresearch-claude-code-marketplace": true,
+    "ui-ux-pro-max@ui-ux-pro-max-skill": true,
+    "logo-design@logo-design-skill": true
   },
   "extraKnownMarketplaces": {
     "openai-codex": {
@@ -68,6 +73,48 @@
       "source": {
         "source": "github",
         "repo": "kepano/obsidian-skills"
+      }
+    },
+    "compound-engineering-plugin": {
+      "source": {
+        "source": "github",
+        "repo": "EveryInc/compound-engineering-plugin"
+      }
+    },
+    "cloudflare": {
+      "source": {
+        "source": "github",
+        "repo": "cloudflare/skills"
+      }
+    },
+    "superpowers-marketplace": {
+      "source": {
+        "source": "github",
+        "repo": "obra/superpowers-marketplace"
+      }
+    },
+    "netresearch-claude-code-marketplace": {
+      "source": {
+        "source": "github",
+        "repo": "netresearch/claude-code-marketplace"
+      }
+    },
+    "anthropic-agent-skills": {
+      "source": {
+        "source": "github",
+        "repo": "anthropics/skills"
+      }
+    },
+    "ui-ux-pro-max-skill": {
+      "source": {
+        "source": "github",
+        "repo": "nextlevelbuilder/ui-ux-pro-max-skill"
+      }
+    },
+    "logo-design-skill": {
+      "source": {
+        "source": "github",
+        "repo": "kaankiziltug/logo-design-skill"
       }
     }
   }
