@@ -77,5 +77,5 @@ install_brew:
 
 # Install Homebrew packages
 .PHONY: install_brew_packages
-install_brew_packages:
-	$$(command -v brew || echo /opt/homebrew/bin/brew) bundle --file=$(DOTFILES)/Brewfile
+install_brew_packages: install_brew
+	"$$(command -v brew || echo /opt/homebrew/bin/brew)" bundle --file="$(DOTFILES)/Brewfile"
