@@ -1,40 +1,98 @@
 # dotfiles
 
-Shell, git, prompt, mise and Claude Code settings, plus a Brewfile, for Apple Silicon Macs. Intel Macs, Rosetta shells and Linux aren't supported, and `make` stops early on them.
+Shell, git, prompt, mise and Claude Code settings, plus the Homebrew and App Store apps to install, for Apple Silicon Macs. Intel Macs, Rosetta shells and Linux aren't supported, and `make` stops early on them.
 
-## Setup
+## Before you start
 
-1. Install the Xcode Command Line Tools, which provide `git` and `make`:
+- An Apple Silicon Mac. Open Terminal normally, not under Rosetta.
+- Sign in to the App Store. The last setup step installs App Store apps and fails without an account. Paid apps such as Mp3tag also need to have been bought with that account.
+- Your account needs admin rights. The Homebrew installer and the App Store step ask for your password.
+
+## Fresh Mac setup
+
+1. **Install the Xcode Command Line Tools.** They provide `git` and `make`. Follow the dialog that opens:
 
    ```sh
    xcode-select --install
    ```
 
-2. Sign in to the App Store, so the Brewfile can install App Store apps. Then clone this repo and run the installer from it:
+2. **Clone this repo.** HTTPS works without an SSH key, and git uses `gh` for GitHub credentials later. The links point into this checkout, so pick its final location now. Cloning under `~/projects/github.com/<owner>/dotfiles` matches the ghq layout that Ctrl+G searches:
+
+   ```sh
+   git clone https://github.com/<owner>/dotfiles.git ~/projects/github.com/<owner>/dotfiles
+   cd ~/projects/github.com/<owner>/dotfiles
+   ```
+
+3. **Run the installer** from the checkout:
 
    ```sh
    make install
    ```
 
-   This links the dotfiles into `~`, installs Homebrew if it's missing, installs everything in `dotfiles/Brewfile`, installs the mise tools (node, bun), and finally installs the App Store apps in `dotfiles/Brewfile.mas`. If only the App Store step fails, fix it (usually by signing in) and run `make install_mas_apps`. Anything already at a link destination is moved to `~/.dotfiles-backup/<timestamp>-<pid>/` first, and the run stops if a move or link fails. Re-running it is safe.
+   It runs these steps in order and stops at the first one that fails:
 
-3. Open a new terminal, then sign in to GitHub. Git uses `gh` for GitHub credentials:
+   | Step | What it does |
+   | --- | --- |
+   | `check_arch` | Stops unless the Mac is Apple Silicon and the shell isn't under Rosetta. |
+   | `symlink` | Links the dotfiles into `~` (see [What gets linked](#what-gets-linked)). |
+   | `install_brew` | Installs Homebrew to `/opt/homebrew` if it isn't there. |
+   | `install_brew_packages` | Installs the formulae and casks in `dotfiles/Brewfile`. |
+   | `install_mise_tools` | Runs `mise install` for the tools in `dotfiles/mise/config.toml` (node, bun). |
+   | `install_mas_apps` | Installs the App Store apps in `dotfiles/Brewfile.mas`, including Xcode, which is a large download. |
+
+   If only the App Store step fails, fix the cause (usually by signing in) and run `make install_mas_apps`.
+
+4. **Open a new terminal** so `.zshrc` loads Homebrew, mise, starship and the zi plugins. The first shell clones zi into `~/.zi`.
+
+5. **Sign in to GitHub.** Git uses `gh` as its credential helper for github.com:
 
    ```sh
    gh auth login
    ```
 
-4. Optional: turn on SSH commit signing by copying the example and setting your key path:
+6. **Download the iOS simulator** once Xcode has installed. Xcode from the App Store doesn't include it:
 
    ```sh
-   cp dotfiles/.gitconfig.local.example ~/.config/git/config.local
+   xcodebuild -downloadPlatform iOS
    ```
 
-5. Optional: link shared agent skills and `AGENTS.md` from an Obsidian vault once it has synced. Copy `Makefile.local.example` to `Makefile.local`, set `OBSIDIAN_CLAUDE`, then run:
+### Optional
 
-   ```sh
-   make symlink_agents
-   ```
+- **SSH commit signing.** Copy the example, set `signingkey` to your public key, and add that key to GitHub as a signing key:
+
+  ```sh
+  cp dotfiles/.gitconfig.local.example ~/.config/git/config.local
+  ```
+
+- **Agent skills from Obsidian.** Once Obsidian is installed and the vault has synced, copy `Makefile.local.example` to `Makefile.local`, set `OBSIDIAN_CLAUDE` to the vault's Claude folder, then run:
+
+  ```sh
+  make symlink_agents
+  ```
+
+  This links each folder in `skills/` into `~/.claude/skills` and `~/.agents/skills`, and links `AGENTS.md` to `~/.claude/CLAUDE.md` and `~/.codex/AGENTS.md`.
+
+## Existing Mac
+
+Running `make install` again is safe. Links that already point into this checkout are left alone, and the Homebrew, mise and App Store steps install only what's missing. `brew bundle` also upgrades outdated packages from the Brewfile.
+
+If a file or folder is already at a link destination, `symlink` and `symlink_agents` move it to `~/.dotfiles-backup/<timestamp>-<pid>/`, keeping its path relative to `~`, and then link. Copy anything you want to keep from there into this repo or into the local files below. If a move or link fails, the run stops with an error and the original stays in place.
+
+After pulling changes, open a new terminal for shell changes, and run `make install_brew_packages` or `make install_mise_tools` for new packages or tools.
+
+## Make targets
+
+Each target runs the targets it depends on first, so `make install_mise_tools` also links the dotfiles and runs the Brewfile.
+
+| Target | Runs |
+| --- | --- |
+| `make install` | Everything in step 3 of [Fresh Mac setup](#fresh-mac-setup). |
+| `make symlink` | Links the dotfiles. |
+| `make symlink_agents` | Links agent skills and `AGENTS.md` from the Obsidian vault. Needs `Makefile.local`. |
+| `make install_brew` | Installs Homebrew. |
+| `make install_brew_packages` | Installs `dotfiles/Brewfile`. |
+| `make install_mise_tools` | Installs the mise tools. |
+| `make install_mas_apps` | Installs `dotfiles/Brewfile.mas`. |
 
 ## What gets linked
 
@@ -48,4 +106,4 @@ Shell, git, prompt, mise and Claude Code settings, plus a Brewfile, for Apple Si
 | `dotfiles/mise/config.toml` | `~/.config/mise/config.toml` |
 | `dotfiles/.claude/settings.json` | `~/.claude/settings.json` |
 
-Machine-specific settings stay out of the repo, in `~/.config/git/config.local` and `Makefile.local`.
+Machine-specific settings stay out of the repo, in `~/.config/git/config.local` and `Makefile.local`. Both are read if present and ignored otherwise.
