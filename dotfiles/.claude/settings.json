@@ -117,5 +117,9 @@
         "repo": "kaankiziltug/logo-design-skill"
       }
     }
-  }
+  },
+  "outputStyle": "Concise",
+  "advisorModel": "fable",
+  "inputNeededNotifEnabled": true,
+  "agentPushNotifEnabled": true
 }
