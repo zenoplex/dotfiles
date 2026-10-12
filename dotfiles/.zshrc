@@ -22,7 +22,16 @@ zi light "zsh-users/zsh-autosuggestions"
 (( $+commands[mise] )) && eval "$(mise activate zsh)"
 
 # control + g to jump to repo dir
-zi light migutw42/zsh-fzf-ghq
+ghq-fzf() {
+  local dir=$(ghq list -p | fzf --query="$LBUFFER")
+  if [[ -n $dir ]]; then
+    BUFFER="cd ${(q)dir}"
+    zle accept-line
+  fi
+  zle reset-prompt
+}
+zle -N ghq-fzf
+bindkey '^g' ghq-fzf
 
 # starship
 (( $+commands[starship] )) && eval "$(starship init zsh)"
