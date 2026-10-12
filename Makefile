@@ -66,9 +66,13 @@ endif
 	link "$(OBSIDIAN_CLAUDE)/AGENTS.md" "${HOME}/.codex/AGENTS.md"; \
 	echo "Symlinked agent files."
 
-# Install Homebrew
+# Install Homebrew (Apple Silicon only; .zshrc assumes /opt/homebrew)
 .PHONY: install_brew
 install_brew:
+	@if [ "$$(sysctl -n hw.optional.arm64 2>/dev/null)" != 1 ]; then \
+		echo "ERROR: these dotfiles support Apple Silicon Macs only"; \
+		exit 1; \
+	fi
 	@if command -v brew >/dev/null 2>&1 || [ -x /opt/homebrew/bin/brew ]; then \
 		echo "Homebrew is installed."; \
 	else \
