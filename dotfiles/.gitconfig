@@ -14,13 +14,11 @@
 [init]
 	defaultBranch = main
 [diff]
-	tool = p4merge
+	tool = vscode
 [merge]
-	tool = p4merge
+	tool = vscode
 [rebase]
 	autosquash = true
-[mergetool "p4merge"]
-	path = /Applications/p4merge.app/Contents/Resources/launchp4merge
 [commit]
 	template = ~/.config/git/message
 [credential "https://github.com"]
