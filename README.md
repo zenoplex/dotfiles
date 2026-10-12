@@ -10,7 +10,7 @@ Shell, git, prompt, mise and Claude Code settings, plus a Brewfile, for Apple Si
    xcode-select --install
    ```
 
-2. Clone this repo and run the installer from it:
+2. Sign in to the App Store, so the Brewfile can install App Store apps. Then clone this repo and run the installer from it:
 
    ```sh
    make install
