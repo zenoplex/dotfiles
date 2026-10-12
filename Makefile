@@ -1,15 +1,6 @@
 DOTFILES := $(CURDIR)/dotfiles
 -include Makefile.local
 
-MANAGED_LINKS := \
-	$(DOTFILES)/.zshrc::$(HOME)/.zshrc \
-	$(DOTFILES)/.gitconfig::$(HOME)/.config/git/config \
-	$(DOTFILES)/.gitignore::$(HOME)/.config/git/ignore \
-	$(DOTFILES)/.gitmessage.txt::$(HOME)/.config/git/message \
-	$(DOTFILES)/starship.toml::$(HOME)/.config/starship.toml \
-	$(DOTFILES)/mise/config.toml::$(HOME)/.config/mise/config.toml \
-	$(DOTFILES)/.claude/settings.json::$(HOME)/.claude/settings.json
-
 # Shared shell function: link <src> <dst>
 # Skips if the destination already resolves to the source. Anything else at the
 # destination is moved under ~/.dotfiles-backup/<timestamp>-<pid>/ before linking.
@@ -63,9 +54,13 @@ check_arch:
 .PHONY: symlink
 symlink: check_arch
 	@$(LINK_FN); \
-	for pair in $(MANAGED_LINKS); do \
-		link "$${pair%%::*}" "$${pair#*::}" || exit 1; \
-	done; \
+	link "$(DOTFILES)/.zshrc" "$(HOME)/.zshrc" && \
+	link "$(DOTFILES)/.gitconfig" "$(HOME)/.config/git/config" && \
+	link "$(DOTFILES)/.gitignore" "$(HOME)/.config/git/ignore" && \
+	link "$(DOTFILES)/.gitmessage.txt" "$(HOME)/.config/git/message" && \
+	link "$(DOTFILES)/starship.toml" "$(HOME)/.config/starship.toml" && \
+	link "$(DOTFILES)/mise/config.toml" "$(HOME)/.config/mise/config.toml" && \
+	link "$(DOTFILES)/.claude/settings.json" "$(HOME)/.claude/settings.json" && \
 	echo "Symlinked dotfiles."
 
 # Symlink agent files from the Obsidian vault (run after Obsidian is set up)
