@@ -11,17 +11,26 @@ MANAGED_LINKS := \
 	$(DOTFILES)/.claude/settings.json::$(HOME)/.claude/settings.json
 
 # Shared shell function: link <src> <dst>
-# Skips if the destination already exists; creates parent directories as needed.
+# Skips if the destination already links to the source. Anything else at the
+# destination is moved under ~/.dotfiles-backup/<timestamp>/ before linking.
+# Creates parent directories as needed.
 define LINK_FN
+backup_root="$(HOME)/.dotfiles-backup/$$(date +%Y%m%d-%H%M%S)-$$$$"; \
 link () { \
 	src="$$1"; dst="$$2"; \
 	if [ ! -e "$$src" ]; then \
 		echo "skipped $$dst (missing source: $$src)"; \
 		return; \
 	fi; \
-	if [ -e "$$dst" ] || [ -L "$$dst" ]; then \
-		echo "skipped $$dst (already exists)"; \
+	if [ -L "$$dst" ] && [ "$$(readlink "$$dst")" = "$$src" ]; then \
+		echo "skipped $$dst (already linked)"; \
 		return; \
+	fi; \
+	if [ -e "$$dst" ] || [ -L "$$dst" ]; then \
+		backup="$$backup_root/$${dst#$(HOME)/}"; \
+		mkdir -p "$$(dirname "$$backup")"; \
+		mv "$$dst" "$$backup"; \
+		echo "backed up $$dst to $$backup"; \
 	fi; \
 	mkdir -p "$$(dirname "$$dst")"; \
 	ln -s "$$src" "$$dst"; \
