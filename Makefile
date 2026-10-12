@@ -33,9 +33,18 @@ endef
 install: symlink install_brew install_brew_packages
 	@echo "NOTE: after Obsidian is installed and the vault is synced, run: make symlink_agents"
 
+# These dotfiles assume Homebrew at /opt/homebrew. uname -m reports x86_64 under
+# Rosetta, where Homebrew refuses to install, so that fails here too.
+.PHONY: check_arch
+check_arch:
+	@if [ "$$(uname -m)" != arm64 ]; then \
+		echo "ERROR: these dotfiles support Apple Silicon Macs only (not Intel or a Rosetta shell)"; \
+		exit 1; \
+	fi
+
 # Symlink dotfiles
 .PHONY: symlink
-symlink:
+symlink: check_arch
 	@$(LINK_FN); \
 	for pair in $(MANAGED_LINKS); do \
 		link "$${pair%%::*}" "$${pair#*::}"; \
@@ -66,13 +75,9 @@ endif
 	link "$(OBSIDIAN_CLAUDE)/AGENTS.md" "${HOME}/.codex/AGENTS.md"; \
 	echo "Symlinked agent files."
 
-# Install Homebrew (Apple Silicon only; .zshrc assumes /opt/homebrew)
+# Install Homebrew
 .PHONY: install_brew
-install_brew:
-	@if [ "$$(sysctl -n hw.optional.arm64 2>/dev/null)" != 1 ]; then \
-		echo "ERROR: these dotfiles support Apple Silicon Macs only"; \
-		exit 1; \
-	fi
+install_brew: check_arch
 	@if command -v brew >/dev/null 2>&1 || [ -x /opt/homebrew/bin/brew ]; then \
 		echo "Homebrew is installed."; \
 	else \
