@@ -66,10 +66,16 @@ Shell, git, prompt, mise and Claude Code settings, plus the Homebrew and App Sto
   cp dotfiles/.gitconfig.local.example ~/.config/git/config.local
   ```
 
-- **Agent skills from Obsidian.** Once Obsidian is installed and the vault has synced, set `OBSIDIAN_CLAUDE` to the vault's Claude folder, either in `Makefile.local` (copy `Makefile.local.example`) or as `make symlink_agents OBSIDIAN_CLAUDE=<path>`, then run:
+- **Agent skills from Obsidian.** Once Obsidian is installed and the vault has synced, point `OBSIDIAN_CLAUDE` at the vault's Claude folder. Either copy `Makefile.local.example` to `Makefile.local`, set it there, and run:
 
   ```sh
   make symlink_agents
+  ```
+
+  Or pass it on the command line:
+
+  ```sh
+  make symlink_agents OBSIDIAN_CLAUDE=<path>
   ```
 
   This links each folder in `skills/` into `~/.claude/skills` and `~/.agents/skills`, and links `AGENTS.md` to `~/.claude/CLAUDE.md` and `~/.codex/AGENTS.md`.
